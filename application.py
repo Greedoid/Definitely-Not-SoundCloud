@@ -11,6 +11,10 @@ application.config.from_object('config') #Need to have a secret key for WTForms
 def index():
 	return render_template('index.html')
 
+@application.route('/about')
+def about():
+	return render_template('about.html')
+
 @application.route('/songs/<year>', methods=['GET']) #Gets the user some people to follow
 def get_songs_from_handle(year):
 	songs = db.get_lyrics_by_year(year)

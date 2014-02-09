@@ -23,10 +23,6 @@ for item in f:
 	#print splits
 	track = network.get_track(splits[0], splits[1])
 	print track.get_mbid()
-#	album = track.get_album()
-#	print album
-#	year = album.get_release_date()
-#	print year
 
 
 f.close()

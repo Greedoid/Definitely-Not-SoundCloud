@@ -119,6 +119,7 @@ function parseText(text) {
     if (discard.test(word)) return;
     word = word.replace(punctuation, "");
     if (stopWords.test(word.toLowerCase())) return;
+    if (word.length < 4) return;
     word = word.substr(0, maxLength);
     cases[word.toLowerCase()] = word;
     tags[word = word.toLowerCase()] = (tags[word] || 0) + 1;
