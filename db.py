@@ -16,15 +16,15 @@ def get_lyrics_by_title(title): # Retrieves the class of a particular suggestion
 	classified = cur.fetchone()
 	if conn: 
 		conn.close()
-	return classified
+	return (classified)
 
 def get_lyrics_by_year(year):
 	conn = sqlite3.connect('lyrics.db')
 	cur = conn.cursor()
 	cur.execute("SELECT Lyrics FROM songs WHERE Year = ?", [year])
 	lyric_sum = cur.fetchall()
-	cleanedup = [str(elem[0]) for elem in lyric_sum]
+	#cleanedup = [str(elem[0]) for elem in lyric_sum]
 	if conn:
 		conn.close()
-	return cleanedup
+	return lyric_sum 
 

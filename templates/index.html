@@ -1,27 +1,35 @@
 
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Word Cloud Generator</title>
+<title>Like a Rolling Stone</title>
 
 <link href="{{ url_for ('static', filename='cloud.css' ) }}", rel="stylesheet">
 
 <div id="vis"></div>
+
+<div id="music"></div>
+<!--
+<ul>
+	<li><a href="#">Home</a></li>
+	<li><a href="#">Aboout</a></li>
+	<li><a href="#">Contact</a></li>
+</ul>
+-->
 
 <form id="form">
   <p style="position: absolute; right: 0; top: 0" id="status"></p>
   <div style="text-align: center">
     <div id="presets"></div>
     <div id="custom-area">
-	    <p><textarea id="text", style=" display:none"></textarea> 
-      <button id="go" type="submit" >Lyricize!</button>
     </div>
   </div>
 
-    <h2>It is the year <span id="slider3text">1950</span></h2>
+    <h2>The year is <span id="slider3text">1948</span></h2>
+	    <p><textarea id="text", style=" display:none"></textarea> 
+      <button id="go" type="submit" >Lyricize!</button>
     <div id="slider3">
     </div>
 
-<hr>
 
 <div style="float: right; text-align: right; display: none">
   <p><label for="max">Number of words:</label> <input type="number" value="250" min="1" id="max">
@@ -48,9 +56,11 @@
     <label for="angle-to">to</label> <input type="number" id="angle-to" value="60" min="-90" max="90"> °
 </div>
 
-<hr style="clear: both">
 
 </form>
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type = "text/javascript"  src={{url_for('static', filename="d3.min.js") }}></script>
 <script src="https://www.jasondavies.com/unicode.js"></script>
@@ -58,18 +68,39 @@
 <script type = "text/javascript" src={{url_for('static', filename="slider.js") }}></script>
 <script type = "text/javascript" src={{url_for('static', filename="mojo.js") }}></script>
 <script>
-	d3.select('#slider3').call(d3.slider().axis(true).min(1940).max(2005).step(1).value(1950).on("slide", function(evt, value) {
+
+	var spotify_src = "https://embed.spotify.com/?uri=spotify:track:";
+	var music_dict = {1953:"7gyVDHcFWxHCh2iqj2enR6",1948: "2YC0Qm7jT39Qm1L3uY4CWO", 1954: "3iQaSx6G50ptbEnzgsaQQy", 1955: "3ZDnPI1RxzJkQDMvo3QzLG",
+		1956: "4joFV4y2PWyvVbtk0z3hIa", 1957: "3OeX4IyrnpwkElW5iS8leo", 1958: "6Et30R1GtviOIDU7wYYyxp", 1959: "5TUa3AsgSh3kJIuXn42wig", 1960: "0KkmIGbNiEGloUla4TK4hP", 1961: "2M3OVvigcmanSnRq1sdlVE", 1962: "7qXWhApDKoha5Es4PImDGS", 1963: "5CloGSswfgNENZ1WDRX0B9", 1964: "2AgOjgFt9kotsPckzMYXZY" , 1965: "6os5B6xjuke9YfBKH3tu1e", 1966: "051CNedSRFZfd6aNddBRIy", 1967: "3kDr9IUhx0tHyyzaSCLLHB", 1968: "2UgZeV435iztRTLrUeOrtk", 1969: "0t7ttzoe3dV0mah4lBI2kx", 1970: "5Ixo7kVPzQlpdn7VVHET7b", 1971: "34tr7aHsxhZ9RVTxQEAyYb", 1972: "7FghJa4oMm2NXK54Novir0", 1973: "0jHkgTtTaqg5LNCiYDQPUB", 1974: "74QCZPlpayjvQ4yJJFljfQ", 1975: "2vX5WL7s6UdeQyweZEx7PP", 1976: "33iQW2OneB0oNh2NfrAzqW", 1977: "3LmpQiFNgFCnvAnhhvKUyI", 1978: "4mS1Su5zf50QwNcjYjYzG6", 1979: "5R0v2GLujsGk37QCkGdvMQ", 1980: "5jzma6gCzYtKB1DbEwFZKH", 1981: "79ynnbIoeTY83kAGNycCth", 1982: "2H7PHVdQ3mXqEHXcvclTB0", 1983: "1TfqLAPs4K3s2rJMoCokcS", 1984: "2EVMlbOZkfU5htC0C3BUGa", 1986: "6qUEOWqOzu1rLPUPQ1ECpx", 1987: "5Fz2wrKAjhKpWeTwvE1Ct3", 1988: "771lQyKAtqXRpZ7iM4JsbPtqXRpZ7iM4JsbP", 1989: "2v7ywbUzCgcVohHaKUcacV", 1990: "4j6Hkosuk9xHcowXjtwefs", 1991: "5ghIJDpPoe3CfHMGu71E6T", 1992: "1VfgWgELCIpe9pB3cLuDnJ", 1993: "6h6p4WuDlZVdBfmGqT0dcR", 1994: "5ByAIlEEnxYdvpnezg7HTX", 1995: "2GIyi2hpXSAlMgjEfmd0oF", 1996: "11a3xNogtu0vMBE5xDCEIG" }
+
+	
+	
+	
+
+	
+
+
+	
+
+	d3.select('#slider3').call(d3.slider().axis(true).min(1940).max(2005).step(1).value(1948).on("slide", function(evt, value) {
+		if (music_dict[value] != undefined)
+		{
+			$('#music').empty();
+			$('#music').append('<iframe src=' + spotify_src + music_dict[value] + ' width="300" height="380" frameborder="0" allowtransparency="true"></iframe>')
+		}
       		d3.select('#slider3text').text(value);
       		$.getJSON('./songs/' + value, function(data){
+			console.log(data)
 	      		$('#text').val('');
-	      		$('#text').val(data['year'])
+	      		$('#text').val(data)
       }); 
     }));
     $('#form').on('submit', function(evt, value) {
-	//d3.select('#text').text();
-	console.log($('#text').val())
 	console.log('Called back!')
+
+
 });
+
 
 
     
