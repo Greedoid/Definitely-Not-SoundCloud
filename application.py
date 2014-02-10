@@ -4,7 +4,6 @@ import json
 import db
 
 application = Flask(__name__)
-application.config.from_object('config') #Need to have a secret key for WTForms
 
 @application.route('/') #Simple page, serves up index with a WTForm
 def index():
